@@ -1,0 +1,48 @@
+.ds-root {
+  --ds-space-1: 0.25rem;
+  --ds-space-2: 0.5rem;
+  --ds-space-3: 0.75rem;
+  --ds-space-4: 1rem;
+  --ds-space-5: 1.25rem;
+  --ds-space-6: 1.5rem;
+  --ds-space-8: 2rem;
+  --ds-space-10: 2.5rem;
+  --ds-space-12: 3rem;
+  --ds-space-16: 4rem;
+  --ds-radius-sm: 0.5rem;
+  --ds-radius-md: 0.75rem;
+  --ds-radius-lg: 1rem;
+  --ds-radius-xl: 1.25rem;
+  --ds-shadow-sm: 0 1px 2px rgb(0 0 0 / 0.06);
+  --ds-shadow-md: 0 14px 34px rgb(15 23 42 / 0.08);
+  --ds-shadow-lg: 0 24px 60px rgb(0 0 0 / 0.28);
+  --ds-container: 80rem;
+  --ds-bp-sm: 40rem;
+  --ds-bp-md: 48rem;
+  --ds-bp-lg: 64rem;
+  --ds-bp-xl: 80rem;
+  --ds-transition: 180ms ease;
+  --ds-z-header: 40;
+  --ds-z-dropdown: 50;
+  --ds-z-overlay: 60;
+  --ds-z-toast: 70;
+  --ds-font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --ds-font-mono: var(--font-geist-mono), ui-monospace, sfmono-regular, monospace;
+  --ds-h1: clamp(1.875rem, 1.15rem + 2.2vw, 3rem);
+  --ds-h2: clamp(1.25rem, 1.05rem + 0.7vw, 1.75rem);
+  --ds-h3: 1.125rem;
+  --ds-h4: 1rem;
+  --ds-h5: 0.875rem;
+  --ds-h6: 0.75rem;
+  --ds-body: 0.9375rem;
+  --ds-small: 0.8125rem;
+  --ds-caption: 0.75rem;
+  --ds-label: 0.6875rem;
+  --ds-price: 1.5rem;
+  color-scheme: light;
+}
+
+.ds-root[data-ds-dark='true'] {
+  --ds-shadow-md: 0 16px 36px rgb(0 0 0 / 0.4);
+  color-scheme: dark;
+}
