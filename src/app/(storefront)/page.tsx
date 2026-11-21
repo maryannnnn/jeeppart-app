@@ -1,6 +1,9 @@
 import type { Metadata } from 'next'
 
 import { StorefrontHome } from '@/components/storefront/StorefrontHome'
+import { getCategoryTree } from '@/utilities/catalog'
+
+export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
   description:
@@ -8,6 +11,17 @@ export const metadata: Metadata = {
   title: 'Jeep-Part — демонстрация витрины',
 }
 
-export default function StorefrontPage() {
-  return <StorefrontHome />
+export default async function StorefrontPage() {
+  const tree = await getCategoryTree()
+
+  return (
+    <StorefrontHome
+      categories={tree.map((category) => ({
+        id: category.id,
+        title: category.title,
+        href: category.href,
+        slug: category.slug,
+      }))}
+    />
+  )
 }

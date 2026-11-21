@@ -1,19 +1,18 @@
 'use client'
 
 import { Car, LayoutGrid, Search, ShoppingBag, X } from 'lucide-react'
+import Link from 'next/link'
 
-import { demoCategories } from '@/components/storefront/data/demo-catalog'
+import { catalogMenu, homepageModels, menuSideLinks } from '@/components/storefront/data/site-menu'
 import { SearchAutocomplete } from '@/components/storefront/SearchAutocomplete'
 import { useStorefront } from '@/components/storefront/storefront-context'
 
 export function MobileNavigation() {
   const {
     cartCount,
-    categoryId,
     garage,
     mobileOpen,
     setCartOpen,
-    setCategoryId,
     setGarageOpen,
     setMobileOpen,
   } = useStorefront()
@@ -45,22 +44,39 @@ export function MobileNavigation() {
                 </span>
               </button>
               <div className="grid gap-1">
-                <p className="ds-label-text">Категории демо-витрины</p>
-                {demoCategories.map((category) => (
-                  <button
-                    key={category.id}
-                    className="ds-btn ds-menu-link"
-                    data-active={categoryId === category.id ? 'true' : 'false'}
-                    onClick={() => {
-                      setCategoryId(category.id)
-                      setMobileOpen(false)
-                      document.getElementById('catalog')?.scrollIntoView({ behavior: 'smooth' })
-                    }}
-                    type="button"
-                  >
-                    {category.name}
-                  </button>
+                <Link className="ds-btn ds-menu-link" href="/" onClick={() => setMobileOpen(false)}>
+                  Главная
+                </Link>
+                <Link className="ds-btn ds-menu-link" href="/car" onClick={() => setMobileOpen(false)}>
+                  Модели
+                </Link>
+                {homepageModels.map((model) => (
+                  <Link className="ds-btn ds-menu-link" href={model.href} key={model.href} onClick={() => setMobileOpen(false)}>
+                    {model.title} {model.years}
+                  </Link>
                 ))}
+                <Link className="ds-btn ds-menu-link" href="/katalog" onClick={() => setMobileOpen(false)}>
+                  Каталог
+                </Link>
+                {catalogMenu.map((item) =>
+                  item.href.startsWith('http') ? (
+                    <a className="ds-btn ds-menu-link" href={item.href} key={item.href}>
+                      {item.label}
+                    </a>
+                  ) : (
+                    <Link className="ds-btn ds-menu-link" href={item.href} key={item.href} onClick={() => setMobileOpen(false)}>
+                      {item.label}
+                    </Link>
+                  ),
+                )}
+                {menuSideLinks.map((item) => (
+                  <Link className="ds-btn ds-menu-link" href={item.href} key={item.href} onClick={() => setMobileOpen(false)}>
+                    {item.label}
+                  </Link>
+                ))}
+                <a className="ds-btn ds-menu-link" href="https://jeep-part.ru/klientam/dostavka">
+                  Доставка
+                </a>
               </div>
               <p className="ds-caption">Телефон и адрес магазина будут добавлены отдельно.</p>
             </div>

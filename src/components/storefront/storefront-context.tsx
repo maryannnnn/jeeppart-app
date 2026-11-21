@@ -12,9 +12,9 @@ import {
 
 import { DEFAULT_THEME_ID, getTheme, themes, type StoreTheme, type ThemeId } from '@/design-system'
 import {
-  demoModels,
   demoProducts,
   findGeneration,
+  modelsForYear,
   productMatchesQuery,
   representativeYear,
   type DemoProduct,
@@ -132,12 +132,22 @@ export function StorefrontProvider({ children }: { children: ReactNode }) {
 
   const setDraft = (patch: Partial<VehicleDraft>) => {
     setDraftState((current) => {
-      const next = { ...current, ...patch }
-      if (patch.modelId && patch.modelId !== current.modelId) {
-        const firstGeneration = demoModels.find((model) => model.id === patch.modelId)?.generations[0]
-        if (firstGeneration) next.generationId = firstGeneration.id
+      const next = { ...current, ...patch, makeId: 'jeep' }
+      if (patch.generationId) {
+        const chosen = findGeneration(patch.generationId)
+        if (!chosen) return next
+        const year =
+          next.year >= chosen.yearFrom && next.year <= chosen.yearTo
+            ? next.year
+            : representativeYear(chosen)
+        return { ...next, year, modelId: chosen.modelId, generationId: chosen.id }
       }
-      return next
+      const options = modelsForYear(next.year)
+      const model = options.find((item) => item.id === next.modelId) ?? options[0]
+      if (!model) return { ...next, modelId: '', generationId: '' }
+      const generation =
+        model.generations.find((item) => item.id === next.generationId) ?? model.generations[0]
+      return { ...next, modelId: model.id, generationId: generation.id }
     })
   }
 

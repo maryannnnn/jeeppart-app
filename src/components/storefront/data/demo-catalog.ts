@@ -53,6 +53,21 @@ export const demoMakes = [{ id: 'jeep', name: 'Jeep' }]
 
 export const demoYears = Array.from({ length: 2026 - 1993 + 1 }, (_, index) => 2026 - index)
 
+export function modelsForYear(year: number, makeId = 'jeep') {
+  return demoModels.flatMap((model) => {
+    if (model.makeId !== makeId) return []
+    const generations = model.generations.filter(
+      (generation) => year >= generation.yearFrom && year <= generation.yearTo,
+    )
+    if (generations.length === 0) return []
+    return [{ ...model, generations }]
+  })
+}
+
+export function selectableYears(makeId = 'jeep') {
+  return demoYears.filter((year) => modelsForYear(year, makeId).length > 0)
+}
+
 export const demoModels: DemoModel[] = [
   {
     id: 'wrangler',

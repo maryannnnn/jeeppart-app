@@ -1,39 +1,29 @@
-'use client'
+import { ChevronRight } from 'lucide-react'
+import Link from 'next/link'
 
-import { Car } from 'lucide-react'
-
-import { listGenerations } from '@/components/storefront/data/demo-catalog'
-import { useStorefront } from '@/components/storefront/storefront-context'
+import { homepageModels } from '@/components/storefront/data/site-menu'
 
 export function PopularModels() {
-  const { garage, applyGeneration } = useStorefront()
-  const generations = listGenerations()
-
   return (
     <section className="ds-section" id="popular-models">
       <div className="ds-container">
-        <div className="mb-4">
-          <h2 className="ds-h2">Популярные кузова Jeep</h2>
-          <p className="ds-caption mt-1">Нажатие выбирает автомобиль в демонстрационном гараже.</p>
+        <div className="mb-5 flex items-end justify-between gap-3">
+          <h2 className="ds-h2">Популярные модели</h2>
+          <Link className="ds-category-all" href="/car">
+            Все модели
+            <ChevronRight size={16} />
+          </Link>
         </div>
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-7">
-          {generations.map((generation) => {
-            const active = garage?.generationId === generation.id
-            return (
-              <button
-                key={generation.id}
-                className="ds-model-card flex flex-col items-center px-3 py-4 text-center"
-                data-active={active ? 'true' : 'false'}
-                onClick={() => applyGeneration(generation.id)}
-                type="button"
-              >
-                <Car size={28} />
-                <span className="ds-h5 mt-2">{generation.modelName}</span>
-                <span className="ds-oem text-[var(--ds-primary-ink)]">{generation.code}</span>
-                <span className="ds-caption">{generation.yearsLabel}</span>
-              </button>
-            )
-          })}
+        <div className="ds-model-grid">
+          {homepageModels.map((model) => (
+            <Link className="ds-model-photo" href={model.href} key={model.href}>
+              <img alt="" src={model.image} />
+              <span className="ds-model-photo-copy">
+                <span className="ds-h5">{model.title}</span>
+                <span className="ds-caption">{model.years}</span>
+              </span>
+            </Link>
+          ))}
         </div>
       </div>
     </section>

@@ -1,98 +1,80 @@
 'use client'
 
 import { Button } from '@/design-system'
-import {
-  demoMakes,
-  demoModels,
-  demoYears,
-} from '@/components/storefront/data/demo-catalog'
+import { demoModels, modelsForYear, selectableYears } from '@/components/storefront/data/demo-catalog'
 import { useStorefront } from '@/components/storefront/storefront-context'
 
 type VehicleSelectorProps = {
   idPrefix: string
+  layout?: 'stack' | 'bar'
   onApply?: () => void
 }
 
-export function VehicleSelector({ idPrefix, onApply }: VehicleSelectorProps) {
+export function VehicleSelector({ idPrefix, layout = 'stack', onApply }: VehicleSelectorProps) {
   const { draft, setDraft, applyDraft } = useStorefront()
-  const models = demoModels.filter((model) => model.makeId === draft.makeId)
-  const generations = models.find((model) => model.id === draft.modelId)?.generations ?? []
+  const years = selectableYears()
+  const models = modelsForYear(draft.year)
+  const model = models.find((item) => item.id === draft.modelId) ?? models[0]
+  const generations = demoModels.find((item) => item.id === model?.id)?.generations ?? []
+  const generation = generations.find((item) => item.id === draft.generationId) ?? generations[0]
 
   return (
     <form
-      className="grid gap-3"
+      className={layout === 'bar' ? 'ds-fitment-form' : 'grid gap-3'}
       onSubmit={(event) => {
         event.preventDefault()
         applyDraft()
         onApply?.()
       }}
     >
-      <div className="grid gap-3 sm:grid-cols-2">
-        <label className="grid gap-1">
-          <span className="ds-label-text">Год выпуска</span>
-          <select
-            className="ds-select"
-            id={`${idPrefix}-year`}
-            onChange={(event) => setDraft({ year: Number(event.target.value) })}
-            value={draft.year}
-          >
-            {demoYears.map((year) => (
-              <option key={year} value={year}>
-                {year}
-              </option>
-            ))}
-          </select>
-        </label>
-        <label className="grid gap-1">
-          <span className="ds-label-text">Марка</span>
-          <select
-            className="ds-select"
-            id={`${idPrefix}-make`}
-            onChange={(event) => setDraft({ makeId: event.target.value })}
-            value={draft.makeId}
-          >
-            {demoMakes.map((make) => (
-              <option key={make.id} value={make.id}>
-                {make.name}
-              </option>
-            ))}
-          </select>
-        </label>
-        <label className="grid gap-1">
-          <span className="ds-label-text">Модель</span>
-          <select
-            className="ds-select"
-            id={`${idPrefix}-model`}
-            onChange={(event) => setDraft({ modelId: event.target.value })}
-            value={draft.modelId}
-          >
-            {models.map((model) => (
-              <option key={model.id} value={model.id}>
-                {model.name}
-              </option>
-            ))}
-          </select>
-        </label>
-        <label className="grid gap-1">
-          <span className="ds-label-text">Поколение / кузов</span>
-          <select
-            className="ds-select"
-            id={`${idPrefix}-generation`}
-            onChange={(event) => setDraft({ generationId: event.target.value })}
-            value={draft.generationId}
-          >
-            {generations.map((generation) => (
-              <option key={generation.id} value={generation.id}>
-                {generation.code} ({generation.yearsLabel})
-              </option>
-            ))}
-          </select>
-        </label>
-      </div>
-      <Button type="submit">Показать демонстрационные детали</Button>
-      <p className="ds-caption">
-        Подбор идёт по примерам на этой странице и не сверяется с рабочим каталогом.
-      </p>
+      <label className="grid gap-1">
+        <span className="ds-label-text">Год</span>
+        <select
+          className="ds-select"
+          id={`${idPrefix}-year`}
+          onChange={(event) => setDraft({ year: Number(event.target.value) })}
+          value={draft.year}
+        >
+          {years.map((year) => (
+            <option key={year} value={year}>
+              {year}
+            </option>
+          ))}
+        </select>
+      </label>
+      <label className="grid gap-1">
+        <span className="ds-label-text">Модель</span>
+        <select
+          className="ds-select"
+          id={`${idPrefix}-model`}
+          onChange={(event) => setDraft({ modelId: event.target.value })}
+          value={model?.id ?? ''}
+        >
+          {models.map((item) => (
+            <option key={item.id} value={item.id}>
+              {item.name}
+            </option>
+          ))}
+        </select>
+      </label>
+      <label className="grid gap-1">
+        <span className="ds-label-text">Поколение</span>
+        <select
+          className="ds-select"
+          id={`${idPrefix}-generation`}
+          onChange={(event) => setDraft({ generationId: event.target.value })}
+          value={generation?.id ?? ''}
+        >
+          {generations.map((item) => (
+            <option key={item.id} value={item.id}>
+              {item.code} ({item.yearsLabel})
+            </option>
+          ))}
+        </select>
+      </label>
+      <Button className="w-full" disabled={!generation} type="submit">
+        Найти запчасти
+      </Button>
     </form>
   )
 }

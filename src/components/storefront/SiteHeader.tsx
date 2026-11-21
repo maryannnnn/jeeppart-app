@@ -1,62 +1,58 @@
 'use client'
 
-import { Menu, Phone, ShoppingBag } from 'lucide-react'
+import { Menu, ShoppingBag } from 'lucide-react'
 import Link from 'next/link'
 
-import { formatPrice } from '@/components/storefront/data/demo-catalog'
 import { MainNavigation } from '@/components/storefront/MainNavigation'
 import { MyGarageButton } from '@/components/storefront/MyGarageButton'
 import { SearchAutocomplete } from '@/components/storefront/SearchAutocomplete'
+import { phoneLink, topBarLinks } from '@/components/storefront/data/site-menu'
 import { useStorefront } from '@/components/storefront/storefront-context'
 
-function GrilleMark() {
-  return (
-    <svg aria-hidden className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
-      <path d="M3 4h2v16H3V4zm4 0h2v16H7V4zm4 0h2v16h-2V4zm4 0h2v16h-2V4zm4 0h2v16h-2V4zM1 20h22v2H1z" />
-    </svg>
-  )
-}
-
 export function SiteHeader() {
-  const { cartCount, cartTotal, setCartOpen, setMobileOpen } = useStorefront()
+  const { cartCount, setCartOpen, setMobileOpen } = useStorefront()
 
   return (
     <header className="ds-header">
-      <div className="ds-container flex items-center gap-3 py-3">
+      <div className="ds-topbar">
+        <div className="ds-container ds-topbar-row">
+          <nav aria-label="Верхнее меню" className="ds-topbar-links">
+            {topBarLinks.map((item) => (
+              <a href={item.href} key={item.href}>
+                {item.label}
+              </a>
+            ))}
+            <button onClick={() => setCartOpen(true)} type="button">
+              корзина
+            </button>
+          </nav>
+          <a className="ds-topbar-phone" href={phoneLink.href}>
+            {phoneLink.label}
+          </a>
+        </div>
+      </div>
+
+      <div className="ds-container ds-header-main">
         <button
           aria-label="Открыть меню"
-          className="ds-icon-btn p-2 lg:hidden"
+          className="ds-icon-btn ds-header-burger p-2 lg:hidden"
           onClick={() => setMobileOpen(true)}
           type="button"
         >
           <Menu size={22} />
         </button>
 
-        <Link className="flex min-w-0 items-center gap-2" href="/">
-          <span className="ds-logo-mark">
-            <GrilleMark />
-          </span>
-          <span className="min-w-0">
-            <span className="ds-logo-title block">
-              JEEP-PART<span>.RU</span>
-            </span>
-            <span className="ds-logo-sub hidden sm:block">Демонстрационная витрина</span>
-          </span>
+        <Link className="ds-header-logo" href="/">
+          <span className="ds-logo-title">Jeep</span>
+          <span className="ds-logo-sub">Запчасти и аксессуары</span>
         </Link>
 
-        <div className="mx-auto hidden min-w-0 max-w-xl flex-1 sm:block">
+        <div className="ds-header-search">
           <SearchAutocomplete />
         </div>
 
-        <div className="ml-auto flex items-center gap-2">
+        <div className="ds-header-actions">
           <MyGarageButton />
-          <div className="ds-contact hidden items-center gap-2 xl:flex">
-            <Phone size={14} />
-            <span>
-              <span className="block font-bold text-[var(--ds-header-text)]">Контакты</span>
-              Телефон будет добавлен
-            </span>
-          </div>
           <button
             aria-label={`Корзина, ${cartCount} шт.`}
             className="ds-cart-btn"
@@ -64,15 +60,11 @@ export function SiteHeader() {
             type="button"
           >
             <ShoppingBag size={18} />
-            <span className="hidden sm:inline">{formatPrice(cartTotal)}</span>
-            {cartCount > 0 ? <span className="ds-cart-count">{cartCount}</span> : null}
+            <span className="ds-cart-count">{cartCount}</span>
           </button>
         </div>
       </div>
 
-      <div className="ds-container pb-3 sm:hidden">
-        <SearchAutocomplete />
-      </div>
       <MainNavigation />
     </header>
   )

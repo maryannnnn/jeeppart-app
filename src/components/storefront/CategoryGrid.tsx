@@ -1,50 +1,87 @@
-'use client'
+import {
+  Armchair,
+  Bolt,
+  Boxes,
+  Cable,
+  Car,
+  CarFront,
+  ChevronRight,
+  CircleDot,
+  Cog,
+  Disc,
+  Fan,
+  Fuel,
+  Funnel,
+  Gauge,
+  Link2,
+  Navigation,
+  Radar,
+  Settings2,
+  Shield,
+  Snowflake,
+  Truck,
+  UnfoldVertical,
+  Wind,
+  Zap,
+  type LucideIcon,
+} from 'lucide-react'
+import Link from 'next/link'
 
-import { CircleDot, Cog, LayoutGrid, Shield, UnfoldVertical, Wrench } from 'lucide-react'
-import type { LucideIcon } from 'lucide-react'
-
-import { categoryCount, demoCategories, type DemoCategory } from '@/components/storefront/data/demo-catalog'
-import { useStorefront } from '@/components/storefront/storefront-context'
-
-const icons: Record<DemoCategory['icon'], LucideIcon> = {
-  all: LayoutGrid,
-  suspension: UnfoldVertical,
-  brakes: CircleDot,
-  engine: Cog,
-  drivetrain: Wrench,
-  exterior: Shield,
+const icons: Record<string, LucideIcon> = {
+  interer: Armchair,
+  bampery: Shield,
+  eksterer: Car,
+  'diski-shiny': Disc,
+  podveska: UnfoldVertical,
+  'datchiki-davleniya-shin': Gauge,
+  'obves-dlya-avtomobilei': Truck,
+  '1000-melochei': Boxes,
+  'glavnaya-peredacha': Cog,
+  datchiki: Radar,
+  dvigatel: Settings2,
+  konditsioner: Snowflake,
+  'korobka-peredach': Cog,
+  krepezh: Bolt,
+  kuzov: CarFront,
+  'remennyi-privod': Link2,
+  'rulevoe-upravleniya': Navigation,
+  'sistema-vypuska': Wind,
+  'sistema-zazhiganiya': Zap,
+  'sistema-okhlazhdeniya': Fan,
+  'toplivnaya-sistema': Fuel,
+  'tormoznaya-sistema': CircleDot,
+  filtry: Funnel,
+  elektrika: Cable,
 }
 
-export function CategoryGrid() {
-  const { categoryId, setCategoryId } = useStorefront()
+export type StorefrontCategoryLink = {
+  id: number
+  title: string
+  href: string
+  slug: string
+}
 
+export function CategoryGrid({ categories }: { categories: StorefrontCategoryLink[] }) {
   return (
     <section className="ds-section border-y border-[var(--ds-divider)] pt-0" id="categories">
       <div className="ds-container">
-        <h2 className="ds-h2 mb-4">Категории</h2>
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
-          {demoCategories.map((category) => {
-            const Icon = icons[category.icon]
-            const active = categoryId === category.id
+        <div className="mb-4 flex items-end justify-between gap-3">
+          <h2 className="ds-h2">Категории</h2>
+          <Link className="ds-category-all" href="/katalog">
+            Все категории
+            <ChevronRight size={16} />
+          </Link>
+        </div>
+        <div className="ds-category-grid">
+          {categories.map((category) => {
+            const Icon = icons[category.slug] ?? Car
             return (
-              <button
-                key={category.id}
-                className="ds-category-card flex items-center gap-3 p-3 text-left"
-                data-active={active ? 'true' : 'false'}
-                onClick={() => {
-                  setCategoryId(category.id)
-                  document.getElementById('catalog')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-                }}
-                type="button"
-              >
-                <span className="ds-category-icon">
-                  <Icon size={18} />
+              <Link className="ds-category-link" href={category.href} key={category.id} title={category.title}>
+                <span className="ds-category-orb">
+                  <Icon size={26} />
                 </span>
-                <span>
-                  <span className="ds-small block font-bold leading-tight">{category.name}</span>
-                  <span className="ds-caption">{categoryCount(category.id)} в демо</span>
-                </span>
-              </button>
+                <span className="ds-category-label">{category.title}</span>
+              </Link>
             )
           })}
         </div>

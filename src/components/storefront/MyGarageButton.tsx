@@ -6,7 +6,7 @@ import { useStorefront } from '@/components/storefront/storefront-context'
 
 export function MyGarageButton() {
   const { garage, setGarageOpen } = useStorefront()
-  const label = garage ? `${garage.modelName} ${garage.generationCode}` : 'Выбрать Jeep'
+  const label = garage ? `${garage.modelName} ${garage.generationCode}` : 'Выбрать автомобиль'
 
   return (
     <button
