@@ -3,7 +3,7 @@
 import { Car, LayoutGrid, Search, ShoppingBag, X } from 'lucide-react'
 import Link from 'next/link'
 
-import { catalogMenu, homepageModels, menuSideLinks } from '@/components/storefront/data/site-menu'
+import { catalogMenu, contactsLink, homepageModels, menuSideLinks } from '@/components/storefront/data/site-menu'
 import { SearchAutocomplete } from '@/components/storefront/SearchAutocomplete'
 import { useStorefront } from '@/components/storefront/storefront-context'
 
@@ -44,9 +44,6 @@ export function MobileNavigation() {
                 </span>
               </button>
               <div className="grid gap-1">
-                <Link className="ds-btn ds-menu-link" href="/" onClick={() => setMobileOpen(false)}>
-                  Главная
-                </Link>
                 <Link className="ds-btn ds-menu-link" href="/car" onClick={() => setMobileOpen(false)}>
                   Модели
                 </Link>
@@ -76,6 +73,9 @@ export function MobileNavigation() {
                 ))}
                 <a className="ds-btn ds-menu-link" href="https://jeep-part.ru/klientam/dostavka">
                   Доставка
+                </a>
+                <a className="ds-btn ds-menu-link" href={contactsLink.href}>
+                  Контакты
                 </a>
               </div>
               <p className="ds-caption">Телефон и адрес магазина будут добавлены отдельно.</p>

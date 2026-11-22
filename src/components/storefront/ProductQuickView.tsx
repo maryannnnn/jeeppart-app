@@ -64,10 +64,10 @@ function QuickViewDialog({ product }: { product: DemoProduct }) {
           </section>
 
           <section className="ds-qa p-4">
-            <h3 className="ds-h5">Совместимость в демо-данных</h3>
+            <h3 className="ds-h5">Совместимость</h3>
             <p className="ds-small mt-1">{quickView.vehicleName}</p>
             <p className="ds-caption">
-              Годы примера: {quickView.yearFrom}–{quickView.yearTo}. Коды поколений: {generations}.
+              Годы: {quickView.yearFrom}–{quickView.yearTo}. Коды поколений: {generations}.
             </p>
             <p className="ds-small mt-2">{quickView.notes}</p>
           </section>

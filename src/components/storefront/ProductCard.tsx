@@ -43,7 +43,7 @@ export function ProductCard({ product }: { product: DemoProduct }) {
             {product.oldPrice ? <p className="ds-price-old">{formatPrice(product.oldPrice)}</p> : null}
           </div>
           <Badge tone={product.inStock ? 'success' : 'warning'}>
-            {product.inStock ? 'Пример: в наличии' : 'Пример: нет в наличии'}
+            {product.inStock ? 'В наличии' : 'Нет в наличии'}
           </Badge>
         </div>
       </div>

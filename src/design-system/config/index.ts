@@ -7,4 +7,4 @@ import type { ThemeId } from '@/design-system/themes/types'
 export const SHOW_THEME_PREVIEW = true
 
 /** Тема, которая применяется при открытии витрины. */
-export const DEFAULT_THEME_ID: ThemeId = 'quadratec'
+export const DEFAULT_THEME_ID: ThemeId = 'trail-olive'

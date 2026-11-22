@@ -241,5 +241,5 @@ const themesById = Object.fromEntries(themes.map((item) => [item.id, item])) as 
 
 export function getTheme(id: string): StoreTheme {
   if (id in themesById) return themesById[id as ThemeId]
-  return themesById.quadratec
+  return themesById['trail-olive']
 }

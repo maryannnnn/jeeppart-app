@@ -171,7 +171,7 @@ export function StorefrontProvider({ children }: { children: ReactNode }) {
     applyGarage(
       draft.generationId,
       draft.year,
-      `Гараж: Jeep ${labelFor(draft.generationId)} ${draft.year}. Фильтр включён на демо-товарах.`,
+      `Гараж активирован: Jeep ${labelFor(draft.generationId)} (${draft.year} г.).`,
     )
     document.getElementById('catalog')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }
@@ -183,14 +183,14 @@ export function StorefrontProvider({ children }: { children: ReactNode }) {
     applyGarage(
       generationId,
       year,
-      `Гараж: ${generation.makeName} ${generation.modelName} ${generation.code}, ${year}.`,
+      `Гараж активирован: ${generation.makeName} ${generation.modelName} ${generation.code} (${year} г.).`,
     )
   }
 
   const resetGarage = () => {
     setGarage(null)
     setOnlyCompatible(false)
-    notify('Автомобиль сброшен. Снова показаны все демонстрационные товары.')
+    notify('Гараж сброшен. Показывается вся номенклатура.')
   }
 
   const searchResults = useMemo(() => {
@@ -320,11 +320,11 @@ export function StorefrontProvider({ children }: { children: ReactNode }) {
       if (!garage) return null
       const matchesGeneration = product.generationIds.includes(garage.generationId)
       const matchesYear = garage.year >= product.yearFrom && garage.year <= product.yearTo
-      const label = `${garage.makeName} ${garage.modelName} ${garage.generationCode} (${garage.year})`
+      const label = `${garage.makeName} ${garage.modelName} ${garage.generationCode} (${garage.year} г.)`
       if (matchesGeneration && matchesYear) {
-        return { status: 'fit', text: `Демо: есть в списке для ${label}` }
+        return { status: 'fit', text: `Подходит на ваш ${label}` }
       }
-      return { status: 'not-fit', text: `Демо: нет в списке для ${label}` }
+      return { status: 'not-fit', text: `Не подходит для ${label}` }
     },
   }
 

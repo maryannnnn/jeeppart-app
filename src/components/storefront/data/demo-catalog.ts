@@ -74,7 +74,7 @@ export const demoModels: DemoModel[] = [
     makeId: 'jeep',
     name: 'Wrangler',
     generations: [
-      { id: 'wrangler-jl', code: 'JL', yearsLabel: '2018–2024', yearFrom: 2018, yearTo: 2024 },
+      { id: 'wrangler-jl', code: 'JL / JT Gladiator', yearsLabel: '2018–2024', yearFrom: 2018, yearTo: 2024 },
       { id: 'wrangler-jk', code: 'JK', yearsLabel: '2007–2017', yearFrom: 2007, yearTo: 2017 },
     ],
   },

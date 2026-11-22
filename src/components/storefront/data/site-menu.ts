@@ -1,10 +1,15 @@
-export const topBarLinks = [
+export const serviceLinks = [
   { href: 'https://jeep-part.ru/kompaniya/o-kompanii', label: 'компания' },
   { href: 'https://jeep-part.ru/klientam/preimushchestva', label: 'клиентам' },
   { href: 'https://jeep-part.ru/akciya-company', label: 'акции' },
   { href: 'https://jeep-part.ru/otziv', label: 'отзывы' },
   { href: 'https://jeep-part.ru/kompaniya/kontakty', label: 'контакты' },
 ]
+
+export const contactsLink = {
+  href: 'https://jeep-part.ru/kompaniya/kontakty',
+  label: 'контакты',
+}
 
 export const phoneLink = {
   href: 'tel:+74951989844',

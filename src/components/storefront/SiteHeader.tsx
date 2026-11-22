@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { MainNavigation } from '@/components/storefront/MainNavigation'
 import { MyGarageButton } from '@/components/storefront/MyGarageButton'
 import { SearchAutocomplete } from '@/components/storefront/SearchAutocomplete'
-import { phoneLink, topBarLinks } from '@/components/storefront/data/site-menu'
+import { phoneLink } from '@/components/storefront/data/site-menu'
 import { useStorefront } from '@/components/storefront/storefront-context'
 
 export function SiteHeader() {
@@ -16,16 +16,9 @@ export function SiteHeader() {
     <header className="ds-header">
       <div className="ds-topbar">
         <div className="ds-container ds-topbar-row">
-          <nav aria-label="Верхнее меню" className="ds-topbar-links">
-            {topBarLinks.map((item) => (
-              <a href={item.href} key={item.href}>
-                {item.label}
-              </a>
-            ))}
-            <button onClick={() => setCartOpen(true)} type="button">
-              корзина
-            </button>
-          </nav>
+          <Link className="ds-topbar-brand" href="/">
+            АВТОЗАПЧАСТИ
+          </Link>
           <a className="ds-topbar-phone" href={phoneLink.href}>
             {phoneLink.label}
           </a>

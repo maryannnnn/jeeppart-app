@@ -3,12 +3,12 @@
 import { ThemeScope } from '@/design-system'
 import { CartDrawer } from '@/components/storefront/CartDrawer'
 import { CategoryGrid, type StorefrontCategoryLink } from '@/components/storefront/CategoryGrid'
-import { GarageStatusBanner } from '@/components/storefront/GarageStatusBanner'
 import { HeroSection } from '@/components/storefront/HeroSection'
 import { MobileNavigation } from '@/components/storefront/MobileNavigation'
 import { PopularModels } from '@/components/storefront/PopularModels'
 import { ProductGrid } from '@/components/storefront/ProductGrid'
 import { ProductQuickView } from '@/components/storefront/ProductQuickView'
+import { ServiceLinks } from '@/components/storefront/ServiceLinks'
 import { SiteFooter } from '@/components/storefront/SiteFooter'
 import { SiteHeader } from '@/components/storefront/SiteHeader'
 import { StorefrontProvider, useStorefront } from '@/components/storefront/storefront-context'
@@ -27,11 +27,16 @@ function StorefrontFrame({ categories }: { categories: StorefrontCategoryLink[] 
       </div>
       <main>
         <HeroSection />
-        <GarageStatusBanner />
-        <CategoryGrid categories={categories} />
+        <section className="ds-page-title">
+          <div className="ds-container">
+            <h1 className="ds-h1">Купить аксессуары и автозапчасти для Джипов (Jeep)</h1>
+          </div>
+        </section>
         <PopularModels />
+        <CategoryGrid categories={categories} />
         <ProductGrid />
       </main>
+      <ServiceLinks />
       <SiteFooter />
       <MobileNavigation />
       <GarageDialog />
